@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import App from './views/components/App'
 import reportWebVitals from './reportWebVitals';
 
-import { configureStore } from './re-ducks/store';
+import { store } from './re-ducks/store';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 const theme = createMuiTheme({
@@ -17,8 +17,6 @@ const theme = createMuiTheme({
     }
   },
 })
-
-const store = configureStore();
 
 ReactDOM.render(
   <React.StrictMode>
