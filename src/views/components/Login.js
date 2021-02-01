@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoginSelector } from "../../re-ducks/login/selectors";
 import { LoginOperation } from '../../re-ducks/login/operations'
 import { VerticalContainer, VerticalPaper } from "./atoms/VerticalWrapper";
+import { useState } from "react";
 
 const Login = () => {
-    let accountName = useSelector(LoginSelector.getAccountName);
-    let accountPassword = useSelector(LoginSelector.getAccountPassword);
+    // let accountName = useSelector(LoginSelector.getAccountName);
+    // let accountPassword = useSelector(LoginSelector.getAccountPassword);
+    // let sessionIdFieldValue = useSelector(LoginSelector.getSessionIdFieldValue);
+    const [accountName, setAccountName] = useState('');
+    const [accountPassword, setAccountPassword] = useState('');
     let loadingMark = useSelector(LoginSelector.loadingMark);
     let errorShown = useSelector(LoginSelector.errorShown);
-    let sessionIdFieldValue = useSelector(LoginSelector.getSessionIdFieldValue);
+    const [sessionId, setSessionId] = useState('');
     const dispatch = useDispatch();
     return (
         <VerticalContainer>
@@ -23,13 +27,13 @@ const Login = () => {
                 startAdornment={
                     <InputAdornment position="start">名前:</InputAdornment>
                 } onChange={
-                    e => dispatch(LoginOperation.onNameFieldChanged(e.target.value))
+                    e => setAccountName(e.target.value)
                 } />
             <Input name="password" type="password" value={accountPassword}
                 startAdornment={
                     <InputAdornment position="start">パスワード:</InputAdornment>
                 } onChange={
-                    e => dispatch(LoginOperation.onPasswordFieldChanged(e.target.value))
+                    e => setAccountPassword(e.target.value)
                 } />
             <Button variant="contained" color='primary' onClick={
                 () => dispatch(LoginOperation.onLoginButtonPushed(accountName, accountPassword))
@@ -38,14 +42,14 @@ const Login = () => {
                 () => dispatch(LoginOperation.onSignupButtonPushed())
             } >SIGNUP</Button>
 
-            <Input name="sessionId" value={sessionIdFieldValue}
+            <Input name="sessionId" value={sessionId}
                 startAdornment={
                     <InputAdornment position="start">セッションのID:</InputAdornment>
                 } onChange={
-                    e => dispatch(LoginOperation.onSessionIdFieldChanged(e.target.value))
+                    e => setSessionId(e.target.value)
                 } />
             <Button onClick={
-                () => dispatch(LoginOperation.loginBySessionId(sessionIdFieldValue))
+                () => dispatch(LoginOperation.loginBySessionId(sessionId))
             } >セッションIDでLOGIN</Button>
 
 
