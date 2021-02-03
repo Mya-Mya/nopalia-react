@@ -35,5 +35,25 @@ export const ProfileOperation = {
                 })
                 .send();
         }
-    }
+    },
+    /**
+     * セッションを基に自分のプロフィールを更新する。
+     * @param {Number} age
+     * @param {String} comment
+     */
+    setMeProfile: (age, comment) => {
+        const sessionId = getSessionId(store.getState());
+        return dispatch => {
+            NopaliaAPI.type('profile.setmyprofile')
+                .payload({ sessionId, age, comment })
+                .onResponse(data => {
+                    const { accountName, status, loggined } = data;
+                    if (!loggined) {
+                        dispatch(SceneOperation.changeScene(SceneName.LOGIN));
+                    }
+                })
+                .onError()
+                .send();
+        }
+    },
 }
